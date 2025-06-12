@@ -238,8 +238,8 @@ training_args = TrainingArguments(
 ## 🔗 相關資源
 
 ### 官方文檔
-- [AI Cup 2025 官網](https://aidea-web.tw/)
-- [比賽規則與評分標準](https://aidea-web.tw/topic/cbea3c74-d86b-48c8-8c83-957b2e1374f2)
+- [AI Cup 2025 官網](https://www.aicup.tw/)
+- [比賽規則與評分標準](https://www.codabench.org/competitions/4890/)
 
 ### 技術文檔
 - [WhisperX GitHub](https://github.com/m-bain/whisperX)
