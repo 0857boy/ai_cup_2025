@@ -252,22 +252,6 @@ training_args = TrainingArguments(
 - [XLM-RoBERTa: Unsupervised Cross-lingual Representation Learning](https://arxiv.org/abs/1911.02116)
 - [Conditional Random Fields: Probabilistic Models for Segmenting and Labeling Sequence Data](https://repository.upenn.edu/cis_papers/159/)
 
-## 👥 貢獻指南
-
-我們歡迎社群貢獻！請參考以下步驟：
-
-1. **Fork 專案**: 建立自己的專案分支
-2. **建立功能分支**: `git checkout -b feature/amazing-feature`
-3. **提交變更**: `git commit -m 'Add amazing feature'`
-4. **推送分支**: `git push origin feature/amazing-feature`
-5. **建立 Pull Request**: 詳細描述變更內容
-
-### 開發規範
-- 遵循 PEP 8 Python 程式碼風格
-- 新功能需附帶測試案例
-- 更新相應的文檔說明
-- 提交訊息使用英文並描述清楚
-
 ## 📝 更新日誌
 
 ### v2.0.0 (2025-06-12)
@@ -284,34 +268,3 @@ training_args = TrainingArguments(
 - ✨ Whisper 語音識別整合
 - ✨ XLM-RoBERTa NER 模型
 - 📚 基礎說明文檔
-
-## 📄 授權條款
-
-本專案採用 MIT 授權條款。詳見 [LICENSE](LICENSE) 檔案。
-
-## 🙏 致謝
-
-感謝以下開源專案與研究團隊：
-
-- **OpenAI**: Whisper 語音識別模型
-- **Hugging Face**: Transformers 與 XLM-RoBERTa 模型
-- **Facebook AI**: XLM-RoBERTa 預訓練模型
-- **PyTorch 團隊**: 深度學習框架支援
-- **Ollama**: 本地 LLM 部署解決方案
-
-## 📧 聯絡資訊
-
-- **專案維護**: AI Cup 2025 團隊
-- **問題回報**: GitHub Issues
-- **技術討論**: GitHub Discussions
-- **電子郵件**: [your-email@domain.com]
-
----
-
-<div align="center">
-
-**🏆 AI Cup 2025 - 推動醫療 AI 技術發展 🚀**
-
-[⭐ 給我們一顆星](https://github.com/your-repo/ai_cup_2025) | [📚 查看文檔](https://github.com/your-repo/ai_cup_2025/wiki) | [🐛 回報問題](https://github.com/your-repo/ai_cup_2025/issues)
-
-</div>
