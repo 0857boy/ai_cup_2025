@@ -268,3 +268,8 @@ training_args = TrainingArguments(
 - ✨ Whisper 語音識別整合
 - ✨ XLM-RoBERTa NER 模型
 - 📚 基礎說明文檔
+
+## 授權
+
+本專案依照 [GNU GPL v3](LICENSE) 條款授權。  
+詳見 LICENSE 檔案以取得完整條款。
