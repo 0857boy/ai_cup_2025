@@ -35,11 +35,12 @@ Task 2 是 AI Cup 2025 的命名實體識別任務，主要目標是：
 
 ```
 task2/
-├── README.md                    # 本說明文件
-├── NER_CRF_FGM_BIO.ipynb        # CRF + FGM 訓練主程式
-├── predict_all.ipynb            # 模型預測
-├── Insert_timestamp.ipynb       # 時間戳對齊處理
-├── config.json                  # 路徑設定
+├── README.md                                  # 本說明文件
+├── NER_CRF_FGM_BIO.ipynb                      # CRF + FGM 訓練主程式
+├── predict_all.ipynb                          # 模型預測
+├── Insert_timestamp.ipynb                     # 時間戳對齊處理
+├── generate_task2_test_data_index.ipynb       # 產生任務二在句子中的index位置
+├── config.json                                # 路徑設定
 ```
 
 ## 🔧 環境設置
@@ -118,8 +119,20 @@ model_test_task1_data_path_txt                      任務一的測試集路徑
 model_test_task2_data_path_txt                      任務二的測試集路徑
 ```
 
+### 2. 產生task2的SHI在句子中的index位置(可以當作測試) - generate_task2_test_data_index.ipynb
 
-### 2. 模型訓練 - NER_CRF_FGM_BIO.ipynb
+舉例:
+```
+2505	DURATION	12	22	10 minutes
+2505	TIME	115	125	last night
+2505	DATE	155	160	today
+2505	FAMILYNAME	166	171	James
+2943	DATE	225	231	Friday
+2943	DATE	248	256	Saturday
+2943	DATE	286	293	Tuesday
+```
+
+### 3. 模型訓練 - NER_CRF_FGM_BIO.ipynb
 
 主要訓練腳本，整合了多種先進技術：
 
@@ -141,7 +154,7 @@ training_args = TrainingArguments(
 )
 ```
 
-### 3. 模型預測 - predict_all.ipynb
+### 4. 模型預測 - predict_all.ipynb
 
 多模型集成預測系統，支援多種模型架構的預測：
 
@@ -162,7 +175,7 @@ predictions = get_level2_entities_normal(model, tokenizer, text, label_map)
 results = Process_Predict_Ner(predictions)
 ```
 
-### 4. 時間戳對齊 - Insert_timestamp.ipynb
+### 5. 時間戳對齊 - Insert_timestamp.ipynb
 
 將 NER 結果與語音時間戳對齊：
 
