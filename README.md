@@ -1,20 +1,20 @@
-# AI Cup 2025 - 醫療語音識別與命名實體識別競賽
+# AI Cup 2025 - 醫病語音敏感個人資料辨識競賽
 
 ## 🏆 競賽概述
 
-本專案為 AI Cup 2025 醫療語音識別與命名實體識別競賽的完整解決方案，涵蓋語音轉文字 (ASR)、命名實體識別 (NER) 以及時間戳對齊等多項先進技術。
+本專案為 AI Cup 2025 醫病語音敏感個人資料辨識競賽的完整解決方案，專注於從醫療對話中識別並保護患者隱私資訊，涵蓋語音轉文字 (ASR)、敏感健康資訊識別 (SHI Detection) 以及時間戳對齊等多項先進技術。
 
 ### 🎯 任務目標
 
-- **Task 1**: 語音識別 (ASR) - 將醫療語音檔案轉換為文字並輸出轉錄結果
-- **Task 2**: 命名實體識別 (NER) - 從轉錄文字中識別醫療相關實體並提供時間戳對齊
+- **Task 1**: 語音識別 (ASR) - 將醫療對話語音檔案轉換為文字並輸出轉錄結果
+- **Task 2**: 敏感健康資訊識別 (SHI Detection) - 從轉錄文字中識別醫療敏感健康資訊並提供時間戳對齊，以保護患者隱私
 
 ### 🏅 主要成果
 
 - **語音識別**: 使用 WhisperX Large-v3 + Ollama Qwen3 實現高精度 ASR
-- **實體識別**: 基於 XLM-RoBERTa + CRF + FGM 對抗訓練達到優異效能
+- **敏感健康資訊識別**: 基於 XLM-RoBERTa + CRF + FGM 對抗訓練達到優異的敏感健康資訊識別效能
 - **音頻處理**: 先進的 Transformer 神經網絡音頻增強系統
-- **數據管理**: 智能 K-fold 交叉驗證與數據集分割工具
+- **隱私保護**: 智能敏感健康資訊檢測與時間戳對齊技術
 
 ## 📁 專案架構
 
@@ -31,7 +31,7 @@ ai_cup_2025/
 │   ├── whisper_large_v3.ipynb   # Whisper 基礎版本
 │   ├── Whisperx.ipynb           # WhisperX 進階版本
 │   └── README.md                # Task 1 詳細說明
-└── task2/                       # Task 2: 命名實體識別
+└── task2/                       # Task 2: 敏感健康資訊識別
     ├── NER_CRF_FGM_BIO.ipynb    # CRF + FGM 訓練主程式
     ├── predict_all.ipynb        # 多模型預測與集成
     ├── Insert_timestamp.ipynb   # 時間戳對齊處理
@@ -53,12 +53,13 @@ ai_cup_2025/
 - **字符級時間戳**: 精確到字符級別的時間對齊
 - **簡繁轉換**: 自動處理繁簡體中文轉換
 
-### 🏷️ 命名實體識別 (task2/)
+### 🏷️ 敏感健康資訊識別 (task2/)
 - **XLM-RoBERTa Large**: 多語言預訓練模型
 - **CRF (條件隨機場)**: 確保序列標註一致性
 - **FGM 對抗訓練**: 提升模型魯棒性
 - **Focal Loss**: 處理類別不平衡問題
 - **階層式分類**: Level 1 + Level 2 雙層分類架構
+- **隱私保護**: 專注於識別醫療對話中的敏感健康資訊 (SHI)
 
 ## 🛠️ 環境設置
 
@@ -121,7 +122,7 @@ cd task1
 python ollama_qwen_whis.py --input_dir "audio_files/" --task1_output "asr_results.txt"
 ```
 
-### 3. Task 2: 命名實體識別
+### 3. Task 2: 敏感健康資訊識別
 
 ```bash
 cd task2
@@ -129,7 +130,7 @@ cd task2
 jupyter notebook NER_CRF_FGM_BIO.ipynb
 
 # 預測結果
-python inference.py --model_dir "trained_model/" --input_file "asr_results.txt" --output_file "ner_results.txt"
+python inference.py --model_dir "trained_model/" --input_file "asr_results.txt" --output_file "shi_results.txt"
 ```
 
 ### 4. 數據集分割
@@ -147,7 +148,7 @@ python split_and_check_k_hold_with_test.py
 - **語言支援**: 中文 (繁/簡)、自動語言檢測
 - **輸出格式**: 檔案名稱 + 轉錄文字
 
-### Task 2 (命名實體識別)
+### Task 2 (敏感健康資訊識別)
 | 模型架構 | Macro F1 | 訓練時間 | GPU 記憶體 |
 |----------|----------|----------|------------|
 | XLM-RoBERTa | 0.8520 | 2h | 6GB |
@@ -155,12 +156,12 @@ python split_and_check_k_hold_with_test.py
 | + FGM | 0.8756 | 3h | 7GB |
 | + Focal Loss | 0.8698 | 2.8h | 7GB |
 
-### 支援的實體類別 (20種)
-- **人物**: PATIENT, DOCTOR, FAMILYNAME, PERSONALNAME
-- **職業**: PROFESSION
-- **地點**: ROOM, DEPARTMENT, HOSPITAL, STREET, CITY, DISTRICT, COUNTY, STATE, COUNTRY
-- **時間**: AGE, DATE, TIME, DURATION, SET
-- **聯絡**: PHONE
+### 支援的敏感健康資訊類別 (SHI - 20種)
+- **人物資訊**: PATIENT, DOCTOR, FAMILYNAME, PERSONALNAME
+- **職業資訊**: PROFESSION
+- **地點資訊**: ROOM, DEPARTMENT, HOSPITAL, STREET, CITY, DISTRICT, COUNTY, STATE, COUNTRY
+- **時間資訊**: AGE, DATE, TIME, DURATION, SET
+- **聯絡資訊**: PHONE
 
 ## 🔧 進階配置
 
@@ -233,7 +234,7 @@ training_args = TrainingArguments(
 - **精確率 (Precision)**: TP / (TP + FP)
 - **召回率 (Recall)**: TP / (TP + FN)
 - **F1 分數**: 精確率和召回率的調和平均
-- **宏平均 F1**: 所有實體類別 F1 的平均值
+- **宏平均 F1**: 所有 SHI 類別 F1 的平均值
 
 ## 🔗 相關資源
 
@@ -257,7 +258,7 @@ training_args = TrainingArguments(
 ### v2.0.0 (2025-06-12)
 - ✨ 新增 Transformer 神經網絡音頻增強
 - ✨ 整合 WhisperX + Ollama 完整語音識別流程
-- ✨ 實現 CRF + FGM 對抗訓練 NER 模型
+- ✨ 實現 CRF + FGM 對抗訓練 SHI 識別模型
 - ✨ 加入心理聲學建模與 GPU 混合精度計算
 - 🔧 優化數據集分割與 K-fold 交叉驗證
 - 📚 完善技術文檔與使用說明
@@ -266,7 +267,7 @@ training_args = TrainingArguments(
 - 🎉 專案初始版本
 - ✨ 基礎音頻預處理功能
 - ✨ Whisper 語音識別整合
-- ✨ XLM-RoBERTa NER 模型
+- ✨ XLM-RoBERTa SHI 識別模型
 - 📚 基礎說明文檔
 
 ## 授權
