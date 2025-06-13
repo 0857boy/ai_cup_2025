@@ -124,11 +124,15 @@ python ollama_qwen_whis.py --input_dir "audio_files/" --task1_output "asr_result
 ```bash
 cd task2
 # 訓練模型
-需要先設定huggling face access_token、儲存模型路徑
+##需要先設定huggling face access_token、儲存模型路徑
 jupyter notebook NER_CRF_FGM_BIO.ipynb
 
 # 預測結果
-需要先設定huggling face access_token、預測模型路徑
+##需要先設定huggling face access_token、預測模型路徑
+jupyter notebook predict_all.ipynb
+
+# 插入timestamp到預測結果
+##需要先設定char_level_whisperx的路徑和、預測結果輸出的路徑
 jupyter notebook Insert_timestamp.ipynb
 
 ### 4. 數據集分割
