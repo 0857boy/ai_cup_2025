@@ -35,10 +35,11 @@ Task 2 是 AI Cup 2025 的命名實體識別任務，主要目標是：
 
 ```
 task2/
-├── README.md                     # 本說明文件
+├── README.md                    # 本說明文件
 ├── NER_CRF_FGM_BIO.ipynb        # CRF + FGM 訓練主程式
 ├── predict_all.ipynb            # 模型預測
 ├── Insert_timestamp.ipynb       # 時間戳對齊處理
+├── config.json                  # 路徑設定
 ```
 
 ## 🔧 環境設置
@@ -61,7 +62,60 @@ pip install tqdm
 
 ## 💻 使用方法
 
-### 1. 模型訓練 - NER_CRF_FGM_BIO.ipynb
+### 1. config.json 設定說明
+config.json 用於集中管理專案中各項模型與資料的路徑設定，避免在程式碼中硬編路徑，讓專案更容易維護與部署。
+
+####📁 設定範例
+
+{
+  "huggingface_access_token":  "",
+  "model_train_task1_data_path_txt": "",
+  "model_train_task2_data_path_txt": "",
+  "model_val_task1_data_path_txt": "",
+  "model_val_task2_data_path_txt": "",
+  "model_save_path": "./NER_model",
+  "model_logging_dir":"./ner_logs",
+  "answer_val_data_path_txt":"",
+
+
+  "model_predict_all_result_path_txt": "",
+  "whisper_timestamp_word_level_path_json": "",
+  "whisper_timestamp_char_level_path_json": "",
+  "char_level_timestamp_task2_NER_result_path_txt": "",
+  "word_level_timestamp_task2_NER_result_path_txt": "",
+
+  "model_checkpoint_1213" : "",
+  "model_checkpoint_1000" : "",
+  "model_checkpoint_500" : "",
+  "model_test_task1_data_path_txt": "",
+  "model_test_task2_data_path_txt": ""
+
+}
+
+
+####📝 欄位說明
+欄位名稱	                                          說明
+huggingface_access_token	                        huggingface的access_token
+model_train_task1_data_path_txt	                  任務一的訓練集路徑
+model_train_task2_data_path_txt                   任務二的訓練集路徑
+model_val_task1_data_path_txt                     任務一的驗證集路徑
+model_val_task2_data_path_txt                     任務二的驗證集路徑
+model_save_path                                   模型儲存資料夾路徑
+model_logging_dir                                 模型log的儲存資料夾路徑
+answer_val_data_path_txt                          驗證集有index位置的結果路徑
+
+model_predict_all_result_path_txt                 模型預測的結果(有index位置)路徑
+whisper_timestamp_word_level_path_json            whisperx的timestamp word_level路徑
+whisper_timestamp_char_level_path_json            whisperx的timestamp char_level路徑
+char_level_timestamp_task2_NER_result_path_txt    char level timestamp的模型預測結果路徑( 把index換成timestamp)
+word_level_timestamp_task2_NER_result_path_txt    word level timestamp的模型預測結果路徑( 把index換成timestamp)
+
+model_checkpoint_{自己命名}                        模型的參數路徑
+model_test_task1_data_path_txt                    任務一的驗證集路徑
+model_test_task2_data_path_txt                    任務二的驗證集路徑
+
+
+### 2. 模型訓練 - NER_CRF_FGM_BIO.ipynb
 
 主要訓練腳本，整合了多種先進技術：
 
@@ -83,7 +137,7 @@ training_args = TrainingArguments(
 )
 ```
 
-### 2. 模型預測 - predict_all.ipynb
+### 3. 模型預測 - predict_all.ipynb
 
 多模型集成預測系統，支援多種模型架構的預測：
 
@@ -104,7 +158,7 @@ predictions = get_level2_entities_normal(model, tokenizer, text, label_map)
 results = Process_Predict_Ner(predictions)
 ```
 
-### 3. 時間戳對齊 - Insert_timestamp.ipynb
+### 4. 時間戳對齊 - Insert_timestamp.ipynb
 
 將 NER 結果與語音時間戳對齊：
 
