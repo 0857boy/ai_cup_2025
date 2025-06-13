@@ -35,7 +35,6 @@ Task 1 是 AI Cup 2025 的語音識別任務，主要目標是：
 task1/
 ├── README.md                    # 本說明文件
 ├── ollama_qwen_whis.py          # 主要處理腳本 (WhisperX + Ollama)
-├── whisper_large_v3.ipynb       # Whisper Large-v3 基礎版本
 └── Whisperx.ipynb              # WhisperX 進階版本
 ```
 
@@ -94,10 +93,6 @@ python ollama_qwen_whis.py --input_dir "path/to/audio" --task1_output "output.tx
 - 完整的 WhisperX 處理流程
 - 字符級別時間戳對齊
 - 適合逐步分析和除錯
-
-#### whisper_large_v3.ipynb  
-- 基礎 Whisper 實作
-- 簡化版本，適合快速測試
 
 ## ⚙️ 技術特點
 
