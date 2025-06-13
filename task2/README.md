@@ -67,6 +67,7 @@ config.json 用於集中管理專案中各項模型與資料的路徑設定，�
 
 ####📁 設定範例
 
+```json
 {
   "huggingface_access_token":  "",
   "model_train_task1_data_path_txt": "",
@@ -91,11 +92,11 @@ config.json 用於集中管理專案中各項模型與資料的路徑設定，�
   "model_test_task2_data_path_txt": ""
 
 }
-
+'''
 
 ####📝 欄位說明
 
-```json
+```txt
 欄位名稱	                                          說明
 huggingface_access_token	                        huggingface的access_token
 model_train_task1_data_path_txt	                  任務一的訓練集路徑
