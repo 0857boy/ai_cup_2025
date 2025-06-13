@@ -114,8 +114,8 @@ char_level_timestamp_task2_NER_result_path_txt      char level timestamp的模�
 word_level_timestamp_task2_NER_result_path_txt      word level timestamp的模型預測結果路徑( 把index換成timestamp)
 
 model_checkpoint_{自己命名}                          模型的參數路徑
-model_test_task1_data_path_txt                      任務一的驗證集路徑
-model_test_task2_data_path_txt                      任務二的驗證集路徑
+model_test_task1_data_path_txt                      任務一的測試集路徑
+model_test_task2_data_path_txt                      任務二的測試集路徑
 ```
 
 
