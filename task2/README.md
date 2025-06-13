@@ -97,25 +97,25 @@ config.json 用於集中管理專案中各項模型與資料的路徑設定，�
 ####📝 欄位說明
 
 ```
-欄位名稱	                                          說明
-huggingface_access_token	                        huggingface的access_token
-model_train_task1_data_path_txt	                  任務一的訓練集路徑
-model_train_task2_data_path_txt                   任務二的訓練集路徑
-model_val_task1_data_path_txt                     任務一的驗證集路徑
-model_val_task2_data_path_txt                     任務二的驗證集路徑
-model_save_path                                   模型儲存資料夾路徑
-model_logging_dir                                 模型log的儲存資料夾路徑
-answer_val_data_path_txt                          驗證集有index位置的結果路徑
+欄位名稱	                                            說明
+huggingface_access_token                            huggingface的access_token
+model_train_task1_data_path_txt	                    任務一的訓練集路徑
+model_train_task2_data_path_txt                     任務二的訓練集路徑
+model_val_task1_data_path_txt                       任務一的驗證集路徑
+model_val_task2_data_path_txt                       任務二的驗證集路徑
+model_save_path                                     模型儲存資料夾路徑
+model_logging_dir                                   模型log的儲存資料夾路徑
+answer_val_data_path_txt                            驗證集有index位置的結果路徑
 
-model_predict_all_result_path_txt                 模型預測的結果(有index位置)路徑
-whisper_timestamp_word_level_path_json            whisperx的timestamp word_level路徑
-whisper_timestamp_char_level_path_json            whisperx的timestamp char_level路徑
-char_level_timestamp_task2_NER_result_path_txt    char level timestamp的模型預測結果路徑( 把index換成timestamp)
-word_level_timestamp_task2_NER_result_path_txt    word level timestamp的模型預測結果路徑( 把index換成timestamp)
+model_predict_all_result_path_txt                   模型預測的結果(有index位置)路徑
+whisper_timestamp_word_level_path_json              whisperx的timestamp word_level路徑
+whisper_timestamp_char_level_path_json              whisperx的timestamp char_level路徑
+char_level_timestamp_task2_NER_result_path_txt      char level timestamp的模型預測結果路徑( 把index換成timestamp)
+word_level_timestamp_task2_NER_result_path_txt      word level timestamp的模型預測結果路徑( 把index換成timestamp)
 
-model_checkpoint_{自己命名}                        模型的參數路徑
-model_test_task1_data_path_txt                    任務一的驗證集路徑
-model_test_task2_data_path_txt                    任務二的驗證集路徑
+model_checkpoint_{自己命名}                          模型的參數路徑
+model_test_task1_data_path_txt                      任務一的驗證集路徑
+model_test_task2_data_path_txt                      任務二的驗證集路徑
 ```
 
 
