@@ -31,11 +31,13 @@ ai_cup_2025/
 │   ├── whisper_large_v3.ipynb   # Whisper 基礎版本
 │   ├── Whisperx.ipynb           # WhisperX 進階版本
 │   └── README.md                # Task 1 詳細說明
-└── task2/                       # Task 2: 敏感健康資訊識別
-    ├── NER_CRF_FGM_BIO.ipynb    # CRF + FGM 訓練主程式
-    ├── predict_all.ipynb        # 多模型預測與集成
-    ├── Insert_timestamp.ipynb   # 時間戳對齊處理
-    └── README.md                # Task 2 詳細說明
+└── task2/
+    ├── README.md                                  # 本說明文件
+    ├── NER_CRF_FGM_BIO.ipynb                      # CRF + FGM 訓練主程式
+    ├── predict_all.ipynb                          # 模型預測
+    ├── Insert_timestamp.ipynb                     # 時間戳對齊處理
+    ├── generate_task2_test_data_index.ipynb       # 產生任務二在句子中的index位置
+    ├── config.json                                # 路徑設定
 ```
 
 ## 🚀 核心技術特點
@@ -123,16 +125,20 @@ python ollama_qwen_whis.py --input_dir "audio_files/" --task1_output "asr_result
 
 ```bash
 cd task2
+
+# 設定儲存路徑和讀取路徑
+config.json
+
+#產生測試資料SHI在句子中的index位置
+jupyter notebook generate_task2_test_data_index.ipynb
+
 # 訓練模型
-##需要先設定huggling face access_token、儲存模型路徑
 jupyter notebook NER_CRF_FGM_BIO.ipynb
 
 # 預測結果
-##需要先設定huggling face access_token、預測模型路徑
 jupyter notebook predict_all.ipynb
 
 # 插入timestamp到預測結果
-##需要先設定char_level_whisperx的路徑和、預測結果輸出的路徑
 jupyter notebook Insert_timestamp.ipynb
 
 ### 4. 數據集分割
