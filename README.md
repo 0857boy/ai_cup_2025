@@ -35,7 +35,6 @@ ai_cup_2025/
     ├── NER_CRF_FGM_BIO.ipynb    # CRF + FGM 訓練主程式
     ├── predict_all.ipynb        # 多模型預測與集成
     ├── Insert_timestamp.ipynb   # 時間戳對齊處理
-    ├── inference.py             # 推理腳本
     └── README.md                # Task 2 詳細說明
 ```
 
@@ -57,8 +56,6 @@ ai_cup_2025/
 - **XLM-RoBERTa Large**: 多語言預訓練模型
 - **CRF (條件隨機場)**: 確保序列標註一致性
 - **FGM 對抗訓練**: 提升模型魯棒性
-- **Focal Loss**: 處理類別不平衡問題
-- **階層式分類**: Level 1 + Level 2 雙層分類架構
 - **隱私保護**: 專注於識別醫療對話中的敏感健康資訊 (SHI)
 
 ## 🛠️ 環境設置
@@ -127,11 +124,12 @@ python ollama_qwen_whis.py --input_dir "audio_files/" --task1_output "asr_result
 ```bash
 cd task2
 # 訓練模型
+需要先設定huggling face access_token、儲存模型路徑
 jupyter notebook NER_CRF_FGM_BIO.ipynb
 
 # 預測結果
-python inference.py --model_dir "trained_model/" --input_file "asr_results.txt" --output_file "shi_results.txt"
-```
+需要先設定huggling face access_token、預測模型路徑
+jupyter notebook Insert_timestamp.ipynb
 
 ### 4. 數據集分割
 
@@ -149,12 +147,21 @@ python split_and_check_k_hold_with_test.py
 - **輸出格式**: 檔案名稱 + 轉錄文字
 
 ### Task 2 (敏感健康資訊識別)
-| 模型架構 | Macro F1 | 訓練時間 | GPU 記憶體 |
-|----------|----------|----------|------------|
-| XLM-RoBERTa | 0.8520 | 2h | 6GB |
-| + CRF | 0.8687 | 2.5h | 7GB |
-| + FGM | 0.8756 | 3h | 7GB |
-| + Focal Loss | 0.8698 | 2.8h | 7GB |
+#### 📊 NER 模型組合 F1-score 比較
+
+| 編號 | 標記方式 | 使用技術              | F1-score | 訓練步數 |
+|------|----------|------------------------|----------|----------|
+| 1    | BIOU     | baseline               | 0.6856   | 812      |
+| 2    | BIOU     | + FGM                  | 0.6698   | 1160     |
+| 3    | BIOU     | + CRF                  | 0.7084   | 1276     |
+| 4    | BIOU     | + focal loss           | 0.6791   | 1856     |
+| 5    | BIOU     | + weight loss          | 0.6497   | 3248     |
+| 6    | BIO      | baseline               | 0.6729   | 1044     |
+| 7    | BIO      | + FGM                  | 0.6801   | 1624     |
+| 8    | BIO      | + CRF                  | 0.7184   | 3016     |
+| 9    | BIO      | + focal loss           | 0.7063   | 1508     |
+| 10   | BIO      | + weight loss          | 0.6581   | 1856     |
+| 11   | BIO      | + CRF + FGM            | **0.7256** | 2088     |
 
 ### 支援的敏感健康資訊類別 (SHI - 20種)
 - **人物資訊**: PATIENT, DOCTOR, FAMILYNAME, PERSONALNAME
