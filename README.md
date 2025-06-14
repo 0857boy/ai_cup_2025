@@ -11,7 +11,7 @@
 
 ### 🏅 主要成果
 
-- **語音識別**: 使用 WhisperX Large-v3 + Ollama Qwen3 實現高精度 ASR
+- **語音識別**: 使用 WhisperX Large-v3 實現高精度 ASR
 - **敏感健康資訊識別**: 基於 XLM-RoBERTa + CRF + FGM 對抗訓練達到優異的敏感健康資訊識別效能
 - **音頻處理**: 先進的 Transformer 神經網絡音頻增強系統
 - **隱私保護**: 智能敏感健康資訊檢測與時間戳對齊技術
