@@ -1,1 +1,25 @@
 
+{
+  "huggingface_access_token":  "",
+  "model_train_task1_data_path_txt": "",
+  "model_train_task2_data_path_txt": "",
+  "model_val_task1_data_path_txt": "",
+  "model_val_task2_data_path_txt": "",
+  "model_save_path": "./NER_model",
+  "model_logging_dir":"./ner_logs",
+  "answer_val_data_path_txt":"",
+
+
+  "model_predict_all_result_path_txt": "./checkpoints/NER_model",
+  "whisper_timestamp_word_level_path_json": "",
+  "whisper_timestamp_char_level_path_json": "",
+  "char_level_timestamp_task2_NER_result_path_txt": "",
+  "word_level_timestamp_task2_NER_result_path_txt": "",
+
+  "model_checkpoint_1213" : "",
+  "model_checkpoint_1000" : "",
+  "model_checkpoint_500" : "",
+  "model_test_task1_data_path_txt": "",
+  "model_test_task2_data_path_txt": ""
+
+}
