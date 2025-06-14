@@ -33,12 +33,13 @@ ai_cup_2025/
 │   └── config.json             # 音頻檔案路徑配置
 │  
 └── task2/
-    ├── README.md                                  # 本說明文件
-    ├── NER_CRF_FGM_BIO.ipynb                      # CRF + FGM 訓練主程式
-    ├── predict_all.ipynb                          # 模型預測
-    ├── Insert_timestamp.ipynb                     # 時間戳對齊處理
-    ├── generate_task2_test_data_index.ipynb       # 產生任務二在句子中的index位置
-    ├── config.json                                # 路徑設定
+    ├── README.md                                      # 本說明文件
+    ├── NER_CRF_FGM_BIO.ipynb                          # CRF + FGM 訓練主程式
+    ├── predict_all.ipynb                              # 模型預測
+    ├── Insert_timestamp.ipynb                         # 時間戳對齊處理
+    ├── generate_task2_test_data_index.ipynb           # 產生任務二在句子中的index位置
+    ├── config.json                                    # 路徑設定
+    ├── other_train_method/                            # 其他model的訓練檔
 ```
 
 ## 🚀 核心技術特點
