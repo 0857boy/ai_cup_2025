@@ -11,8 +11,7 @@ Task 2 是 AI Cup 2025 的命名實體識別任務，主要目標是：
 
 ### 1. 命名實體識別 (NER)
 - 使用 **XLM-RoBERTa Large** 作為基礎模型
-- 支援多種標註格式：**BIO**、**BIOU**、**BILOU**
-- 集成多種優化技術：**CRF**、**FGM對抗訓練**、**Focal Loss**
+- 加上CRF層和FGM訓練方式
 - 支援 20 種醫療相關實體類別：
   - **人物**: PATIENT, DOCTOR, USERNAME, FAMILYNAME, PERSONALNAME
   - **職業**: PROFESSION
@@ -31,18 +30,17 @@ Task 2 是 AI Cup 2025 的命名實體識別任務，主要目標是：
 - **基礎模型**: XLM-RoBERTa Large (FacebookAI/xlm-roberta-large-finetuned-conll03-english)
 - **條件隨機場 (CRF)**: 改善序列標註一致性
 - **對抗訓練 (FGM)**: 提升模型魯棒性
-- **Focal Loss**: 處理類別不平衡問題
-- **階層式分類**: Level 1 + Level 2 雙層分類架構
 
 ## 📁 檔案結構
 
 ```
 task2/
-├── README.md                     # 本說明文件
-├── NER_CRF_FGM_BIO.ipynb        # CRF + FGM 訓練主程式
-├── predict_all.ipynb            # 多模型預測與集成
-├── Insert_timestamp.ipynb       # 時間戳對齊處理
-└── inference.py                 # 推理腳本
+├── README.md                                  # 本說明文件
+├── NER_CRF_FGM_BIO.ipynb                      # CRF + FGM 訓練主程式
+├── predict_all.ipynb                          # 模型預測
+├── Insert_timestamp.ipynb                     # 時間戳對齊處理
+├── generate_task2_test_data_index.ipynb       # 產生任務二在句子中的index位置
+├── config.json                                # 路徑設定
 ```
 
 ## 🔧 環境設置
@@ -65,7 +63,76 @@ pip install tqdm
 
 ## 💻 使用方法
 
-### 1. 模型訓練 - NER_CRF_FGM_BIO.ipynb
+### 1. config.json 設定說明
+config.json 用於集中管理專案中各項模型與資料的路徑設定，避免在程式碼中硬編路徑，讓專案更容易維護與部署。
+
+####📁 設定範例
+
+```json
+{
+  "huggingface_access_token":  "",
+  "model_train_task1_data_path_txt": "",
+  "model_train_task2_data_path_txt": "",
+  "model_val_task1_data_path_txt": "",
+  "model_val_task2_data_path_txt": "",
+  "model_save_path": "./NER_model",
+  "model_logging_dir":"./ner_logs",
+  "answer_val_data_path_txt":"",
+
+
+  "model_predict_all_result_path_txt": "",
+  "whisper_timestamp_word_level_path_json": "",
+  "whisper_timestamp_char_level_path_json": "",
+  "char_level_timestamp_task2_NER_result_path_txt": "",
+  "word_level_timestamp_task2_NER_result_path_txt": "",
+
+  "model_checkpoint_1213" : "",
+  "model_checkpoint_1000" : "",
+  "model_checkpoint_500" : "",
+  "model_test_task1_data_path_txt": "",
+  "model_test_task2_data_path_txt": ""
+
+}
+```
+
+####📝 欄位說明
+
+```
+欄位名稱	                                            說明
+huggingface_access_token                            huggingface的access_token
+model_train_task1_data_path_txt	                    任務一的訓練集路徑
+model_train_task2_data_path_txt                     任務二的訓練集路徑
+model_val_task1_data_path_txt                       任務一的驗證集路徑
+model_val_task2_data_path_txt                       任務二的驗證集路徑
+model_save_path                                     模型儲存資料夾路徑
+model_logging_dir                                   模型log的儲存資料夾路徑
+answer_val_data_path_txt                            驗證集有index位置的結果路徑
+
+model_predict_all_result_path_txt                   模型預測的結果(有index位置)路徑
+whisper_timestamp_word_level_path_json              whisperx的timestamp word_level路徑
+whisper_timestamp_char_level_path_json              whisperx的timestamp char_level路徑
+char_level_timestamp_task2_NER_result_path_txt      char level timestamp的模型預測結果路徑( 把index換成timestamp)
+word_level_timestamp_task2_NER_result_path_txt      word level timestamp的模型預測結果路徑( 把index換成timestamp)
+
+model_checkpoint_{自己命名}                          模型的參數路徑
+model_test_task1_data_path_txt                      任務一的測試集路徑
+model_test_task2_data_path_txt                      任務二的測試集路徑
+```
+
+### 2. 產生task2的SHI在句子中的index位置(可以當作測試) - generate_task2_test_data_index.ipynb
+
+舉例:
+```
+2505	DURATION	12	22	10 minutes
+2505	TIME	115	125	last night
+2505	DATE	155	160	today
+2505	FAMILYNAME	166	171	James
+2943	DATE	225	231	Friday
+2943	DATE	248	256	Saturday
+2943	DATE	286	293	Tuesday
+```
+
+### 3. 模型訓練 - NER_CRF_FGM_BIO.ipynb
 
 主要訓練腳本，整合了多種先進技術：
 
@@ -84,14 +151,12 @@ training_args = TrainingArguments(
     learning_rate=3e-5,
     num_train_epochs=40,
     weight_decay=0.03,
-    per_device_train_batch_size=4,
-    per_device_eval_batch_size=4,
 )
 ```
 
-### 2. 模型預測 - predict_all.ipynb
+### 4. 模型預測 - predict_all.ipynb
 
-多模型集成預測系統，支援多種模型架構：
+多模型集成預測系統，支援多種模型架構的預測：
 
 #### 支援的模型類型：
 - **CRF模型**: `crf`, `crf_FGM`, `crf_BIOU`
@@ -110,7 +175,7 @@ predictions = get_level2_entities_normal(model, tokenizer, text, label_map)
 results = Process_Predict_Ner(predictions)
 ```
 
-### 3. 時間戳對齊 - Insert_timestamp.ipynb
+### 5. 時間戳對齊 - Insert_timestamp.ipynb
 
 將 NER 結果與語音時間戳對齊：
 
@@ -145,15 +210,6 @@ def align_ner_with_whisper(ner_entities, whisper_words):
 - **魯棒性提升**: 增強模型對輸入變化的穩定性
 - **正則化效果**: 防止過擬合
 
-### Focal Loss
-- **類別平衡**: 處理醫療實體類別不平衡問題
-- **難例挖掘**: 關注難以分類的樣本
-- **動態權重**: 根據預測置信度調整損失
-
-### 階層式分類
-- **兩階段預測**: Level 1 大類 + Level 2 細類
-- **約束機制**: 確保子類屬於對應大類
-- **多任務學習**: 同時優化兩個分類任務
 
 ## 📊 標註格式
 
@@ -161,12 +217,6 @@ def align_ner_with_whisper(ner_entities, whisper_words):
 - **B-XXX**: 實體開始
 - **I-XXX**: 實體內部
 - **O**: 非實體
-
-### BIOU 格式
-- **B-XXX**: 實體開始
-- **I-XXX**: 實體內部
-- **O**: 非實體
-- **U-XXX**: 單字實體
 
 ### 範例
 ```
@@ -231,19 +281,21 @@ def calculate_overlap(pred_start, pred_end, gt_start, gt_end):
 
 ## 📈 實驗結果
 
-### 基準模型比較
-| 模型 | Macro F1 | 訓練時間 | GPU 記憶體 |
-|------|----------|----------|------------|
-| XLM-RoBERTa | 0.8520 | 2h | 6GB |
-| + CRF | 0.8687 | 2.5h | 7GB |
-| + FGM | 0.8756 | 3h | 7GB |
-| + Focal Loss | 0.8698 | 2.8h | 7GB |
+### 📊 NER 模型組合 F1-score 比較
 
-### 標註格式比較
-| 格式 | Macro F1 | 優勢 | 劣勢 |
-|------|----------|------|------|
-| BIO | 0.8687 | 簡單、穩定 | 無法區分單字實體 |
-| BIOU | 0.8734 | 更精確的實體邊界 | 複雜度較高 |
+| 編號 | 標記方式 | 使用技術              | F1-score | 訓練步數 |
+|------|----------|------------------------|----------|----------|
+| 1    | BIOU     | baseline               | 0.6856   | 812      |
+| 2    | BIOU     | + FGM                  | 0.6698   | 1160     |
+| 3    | BIOU     | + CRF                  | 0.7084   | 1276     |
+| 4    | BIOU     | + focal loss           | 0.6791   | 1856     |
+| 5    | BIOU     | + weight loss          | 0.6497   | 3248     |
+| 6    | BIO      | baseline               | 0.6729   | 1044     |
+| 7    | BIO      | + FGM                  | 0.6801   | 1624     |
+| 8    | BIO      | + CRF                  | 0.7184   | 3016     |
+| 9    | BIO      | + focal loss           | 0.7063   | 1508     |
+| 10   | BIO      | + weight loss          | 0.6581   | 1856     |
+| 11   | BIO      | + CRF + FGM            | **0.7256** | 2088     |
 
 ## 🔗 相關連結
 
@@ -251,12 +303,3 @@ def calculate_overlap(pred_start, pred_end, gt_start, gt_end):
 - [TorchCRF](https://pytorch-crf.readthedocs.io/)
 - [Transformers](https://huggingface.co/transformers/)
 - [AI Cup 2025 官網](https://aidea-web.tw/topic/cbea3c74-d86b-48c8-8c83-957b2e1374f2)
-
-## 📝 更新日誌
-
-- **v1.0**: 基礎 XLM-RoBERTa NER 實作
-- **v1.1**: 加入 CRF 層提升序列一致性
-- **v1.2**: 整合 FGM 對抗訓練
-- **v1.3**: 實作 Focal Loss 處理類別不平衡
-- **v1.4**: 加入階層式分類架構
-- **v1.5**: 完善時間戳對齊機制
