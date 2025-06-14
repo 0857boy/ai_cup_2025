@@ -12,7 +12,7 @@ import google.generativeai as genai
 torch.backends.cuda.matmul.allow_tf32 = True
 torch.backends.cudnn.allow_tf32 = True
 
-genai.configure(api_key="AIzaSyAV62qXO13d2M44iAG0FmvJJN0FG_UWtks")
+genai.configure(api_key="your api keys")
 gemini_model = genai.GenerativeModel(model_name="gemini-2.5-pro-preview-05-06")
 
 NER_LABELS = [
