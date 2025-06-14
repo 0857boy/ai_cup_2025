@@ -39,7 +39,18 @@ ai_cup_2025/
     ├── Insert_timestamp.ipynb                         # 時間戳對齊處理
     ├── generate_task2_test_data_index.ipynb           # 產生任務二在句子中的index位置
     ├── config.json                                    # 路徑設定
-    ├── other_train_method/                            # 其他model的訓練檔
+    └── other_train_method                            # 其他model的訓練檔
+        ├── config.json                            # 配置檔案
+        ├── NER_BIO.ipynb                          # BIO 基礎模型
+        ├── NER_BIOU.ipynb                         # BIOU 基礎模型
+        ├── NER_CRF_BIO.ipynb                      # BIO + CRF 模型
+        ├── NER_CRF_BIOU.ipynb                     # BIOU + CRF 模型
+        ├── FGM_BIO.ipynb                          # BIO + FGM 對抗訓練
+        ├── FGM_BIOU.ipynb                         # BIOU + FGM 對抗訓練
+        ├── FOCAL_LOSS_BIO.ipynb                   # BIO + Focal Loss
+        ├── FOCAL_LOSS_BIOU.ipynb                  # BIOU + Focal Loss
+        ├── weight_LOSS_BIO.ipynb                  # BIO + 權重調整
+        └── weight_LOSS_BIOU.ipynb                 # BIOU + 權重調整
 ```
 
 ## 🚀 核心技術特點

@@ -35,12 +35,24 @@ Task 2 是 AI Cup 2025 的命名實體識別任務，主要目標是：
 
 ```
 task2/
-├── README.md                                  # 本說明文件
-├── NER_CRF_FGM_BIO.ipynb                      # CRF + FGM 訓練主程式
-├── predict_all.ipynb                          # 模型預測
-├── Insert_timestamp.ipynb                     # 時間戳對齊處理
-├── generate_task2_test_data_index.ipynb       # 產生任務二在句子中的index位置
-├── config.json                                # 路徑設定
+├── README.md                                      # 本說明文件
+├── NER_CRF_FGM_BIO.ipynb                          # CRF + FGM 訓練主程式
+├── predict_all.ipynb                              # 模型預測
+├── Insert_timestamp.ipynb                         # 時間戳對齊處理
+├── generate_task2_test_data_index.ipynb           # 產生任務二在句子中的index位置
+├── config.json                                    # 路徑設定
+└── other_train_method                            # 其他model的訓練檔
+    ├── config.json                            # 配置檔案
+    ├── NER_BIO.ipynb                          # BIO 基礎模型
+    ├── NER_BIOU.ipynb                         # BIOU 基礎模型
+    ├── NER_CRF_BIO.ipynb                      # BIO + CRF 模型
+    ├── NER_CRF_BIOU.ipynb                     # BIOU + CRF 模型
+    ├── FGM_BIO.ipynb                          # BIO + FGM 對抗訓練
+    ├── FGM_BIOU.ipynb                         # BIOU + FGM 對抗訓練
+    ├── FOCAL_LOSS_BIO.ipynb                   # BIO + Focal Loss
+    ├── FOCAL_LOSS_BIOU.ipynb                  # BIOU + Focal Loss
+    ├── weight_LOSS_BIO.ipynb                  # BIO + 權重調整
+    └── weight_LOSS_BIOU.ipynb                 # BIOU + 權重調整
 ```
 
 ## 🔧 環境設置
