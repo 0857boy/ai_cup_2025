@@ -27,10 +27,10 @@ ai_cup_2025/
 │   ├── split_and_check_k_hold_with_test.py  # 數據集分割
 │   └── README.md                # 預處理模組說明
 ├── task1/                       # Task 1: 語音識別
-│   ├── ollama_qwen_whis.py      # 主要處理腳本 (WhisperX + Ollama)
-│   ├── whisper_large_v3.ipynb   # Whisper 基礎版本
-│   ├── Whisperx.ipynb           # WhisperX 進階版本
-│   └── README.md                # Task 1 詳細說明
+│   ├── README.md                # 本說明文件
+│   ├── gemini_whis.py          # 主要處理腳本 (WhisperX + Gemini)
+│   └── Whisperx.ipynb          # WhisperX 基礎實現筆記本
+│  
 └── task2/
     ├── README.md                                  # 本說明文件
     ├── NER_CRF_FGM_BIO.ipynb                      # CRF + FGM 訓練主程式
