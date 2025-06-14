@@ -27,9 +27,10 @@ ai_cup_2025/
 │   ├── split_and_check_k_hold_with_test.py  # 數據集分割
 │   └── README.md                # 預處理模組說明
 ├── task1/                       # Task 1: 語音識別
-│   ├── README.md                # 本說明文件
+│   ├── README.md                # Task 1 詳細說明
 │   ├── gemini_whis.py          # 主要處理腳本 (WhisperX + Gemini)
-│   └── Whisperx.ipynb          # WhisperX 基礎實現筆記本
+│   ├── Whisperx.ipynb          # WhisperX 基礎實現筆記本
+│   └── config.json             # 音頻檔案路徑配置
 │  
 └── task2/
     ├── README.md                                  # 本說明文件
@@ -49,10 +50,11 @@ ai_cup_2025/
 - **K-fold 數據分割**: 使用 MultilabelStratifiedKFold 確保標籤分布平衡
 
 ### 🗣️ 語音識別 (task1/)
-- **WhisperX Large-v3**: 業界領先的語音識別模型
-- **Ollama Qwen3**: 本地部署的中文 NER 模型
-- **字符級時間戳**: 精確到字符級別的時間對齊
-- **簡繁轉換**: 自動處理繁簡體中文轉換
+- **WhisperX Large-v3**: 業界領先的多語言語音識別模型
+- **Gemini 2.5 Pro**: Google 先進的醫療 NER 標註模型
+- **字符級時間戳對齊**: 精確到字符級別的時間定位
+- **智能語言檢測**: 自動檢測和處理多種語言
+- **繁簡轉換**: 自動處理繁簡體中文轉換
 
 ### 🏷️ 敏感健康資訊識別 (task2/)
 - **XLM-RoBERTa Large**: 多語言預訓練模型
@@ -83,12 +85,11 @@ pip install scipy psutil GPUtil
 pip install torchcrf pytorch-crf
 pip install datasets opencc-python-reimplemented
 
+# AI 模型服務
+pip install google-generativeai  # Gemini 2.5 Pro
+
 # 數據處理
 pip install iterstrat  # 多標籤分層分割
-
-# Ollama (本地 LLM)
-# 請至 https://ollama.ai 下載並安裝
-ollama pull qwen3:8b
 ```
 
 ### 快速安裝
@@ -101,8 +102,8 @@ cd ai_cup_2025
 # 安裝依賴 (建議使用虛擬環境)
 pip install -r requirements.txt
 
-# 安裝 Ollama 模型
-ollama pull qwen3:8b
+# 設定 Gemini API Key (請先申請 Google AI Studio API Key)
+export GOOGLE_API_KEY="your_api_key_here"
 ```
 
 ## 🏃‍♂️ 快速開始
@@ -118,7 +119,11 @@ python audio_prepare.py --input_dir "raw_audio/" --output_dir "processed_audio/"
 
 ```bash
 cd task1
-python ollama_qwen_whis.py --input_dir "audio_files/" --task1_output "asr_results.txt"
+# 設定音頻檔案路徑 (編輯 config.json)
+python gemini_whis.py --input_dir "audio_files/" --task1_output "task1_output.txt"
+
+# 或使用 Jupyter Notebook
+jupyter notebook Whisperx.ipynb
 ```
 
 ### 3. Task 2: 敏感健康資訊識別
@@ -152,10 +157,12 @@ python split_and_check_k_hold_with_test.py
 ## 📊 實驗結果與效能
 
 ### Task 1 (語音識別)
-- **模型**: WhisperX Large-v3 + Ollama Qwen3
+- **核心模型**: WhisperX Large-v3
 - **處理速度**: 10-20x 實時處理速度 (GPU)
 - **語言支援**: 中文 (繁/簡)、自動語言檢測
-- **輸出格式**: 檔案名稱 + 轉錄文字
+- **輸出格式**: 
+  - Task 1: 檔案名稱 + 轉錄文字
+  - Task 2: 檔案名稱 + 實體類別 + 實體文字 + 時間戳
 
 ### Task 2 (敏感健康資訊識別)
 #### 📊 NER 模型組合 F1-score 比較
@@ -221,11 +228,12 @@ training_args = TrainingArguments(
    --gradient_checkpointing=True
    ```
 
-2. **Ollama 連線失敗**
+2. **Gemini API 配置錯誤**
    ```bash
-   # 確認 Ollama 服務運行
-   ollama list
-   ollama run qwen3:8b
+   # 確認 API Key 設定
+   export GOOGLE_API_KEY="your_api_key_here"
+   # 或在程式中設定
+   genai.configure(api_key="your_api_key_here")
    ```
 
 3. **音頻格式不支援**
